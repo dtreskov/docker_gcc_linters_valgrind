@@ -1,4 +1,4 @@
-# docker_gcc_linters_valgrind
+# tests_in_docker
 Dockerfile and script to fast build-and-run docker container to check your project for leaks, programming errors, bugs, stylistic errors and suspicious constructs.
 
 ## Project content
