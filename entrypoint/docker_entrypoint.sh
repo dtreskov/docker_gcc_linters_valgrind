@@ -4,6 +4,7 @@ mkdir -p logs
 # perform make with target "test", write your own target here
 make test 2>&1 | tee "logs/test_make_$(date +"%d_%m_%y__%H_%M_%S").log"
 
+
 # VALGRIND checks compiled program for leaks, saving it to logfile
 # 2>&1 | tee construction copy stdout and stderr to file, instead of just redirecting
 echo -e "\\e[94m\\e[40m Do you want to test your project with valgrind? This can take a long time.\n [Yy/...]\\e[0m"
