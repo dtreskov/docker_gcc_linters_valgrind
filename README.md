@@ -1,10 +1,10 @@
-# docker_gcc_linters_valgrind
+# tests_in_docker
 Dockerfile and script to fast build-and-run docker container to check your project for leaks, programming errors, bugs, stylistic errors and suspicious constructs.
 
 ## Project content
 
 - `build.sh` - script to build docker image based on `Dockerfile`, required to run only once.
-- `run.sh` - script to run container from build image, if you need the container to continue running after finishing script, then add -t flag
+- `run.sh` - script to run container from build image
 - `Dockerfile` - file with command lines to assemble docker image. Here we defined:
   <details>
   <summary>Brief description of Dockerfile commands</summary>
@@ -19,7 +19,7 @@ Dockerfile and script to fast build-and-run docker container to check your proje
   </details>
 
 - `/src` - folder to store your project to compile and test
-- `/entrypoint` - folder entrypoint script and auxiliary files, which can be used by script - configs for linters, as example.
+- `/entrypoint` - folder with entrypoint script and auxiliary files, which can be used by script - configs for linters, for example.
 - `/entrypoint/docker_entrypoint.sh` - bash script, which you can edit to perform various operations on your code, simple example:
 
 ```shell
@@ -38,8 +38,8 @@ valgrind --trace-children=yes --track-fds=yes --track-origins=yes --leak-check=f
 
   - You should have Docker application installed to build and run docker containers.
   - To build container image run `build.sh` script or `docker build . -t <your_name:your_tag>` command. You only need to do it once, if you don't need to install additional libraries in the future.
-  - To install additional libraries add them to RUN field in `Dockerfile`.
+  - To install additional libraries add them to RUN field in `Dockerfile` and rebuild image with script.
   - Then edit `/entrypoint/docker_entrypoint.sh`, write command which you want to run inside container.
-  - Copy your C project to `/src` folder
+  - Copy your project files to `/src` folder
   - Run `run.sh` script or `docker run -v $(pwd)/entrypoint:/usr/docker_files/entrypoint -v $(pwd)/src:/usr/docker_files/src --rm -it <your_name:your_tag>` command. Be carefully with mapped volumes.
-  - In my sample file results of `valgrind`, `cpplint`, `cppcheck` and `clang-format `commands stored in /src/logs files.
+  - In my sample file results of `valgrind`, `cpplint`, `cppcheck` and `clang-format` commands stored in /src/logs files, you can edit `/entrypoint/docker_entrypoint.sh` to perform checks you want.
